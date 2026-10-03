@@ -1,76 +1,83 @@
-# JSP-000301 — Consecutive powerful numbers need not include a perfect square
+# JSP-000301 - Consecutive powerful numbers need not include a perfect square
 
-**Justin Sun Prize · JSP-000301 · Lean 4 Formalization**
+**Justin Sun Prize - JSP-000301 - Lean 4.20.0 formalization (no Mathlib)**
 
 ## Overview
 
-This repository provides a complete machine-verified Lean 4 formalization of the counterexample to JSP-000301:
+Problem (problem bank, `problems/catalog-0301-0400.md#JSP-000301`):
 
 > If two consecutive positive integers are powerful, must at least one be a perfect square?
 
-**Answer: No.** Counterexample: **12167 = 23³** and **12168 = 2³ × 3² × 13²**.
+**Answer: No.** Counterexample: **12167 = 23^3** and **12168 = 2^3 * 3^2 * 13^2**.
 
-Both are powerful (every prime divisor has exponent ≥ 2), neither is a perfect square (110² = 12100 < both < 12321 = 111²), and they are consecutive (12168 = 12167 + 1).
+Both are powerful (every prime divisor occurs with exponent >= 2), neither is a perfect square
+(110^2 = 12100 < 12167 < 12168 < 12321 = 111^2), and they are consecutive.
 
-## Key Features
-
-- **Zero Mathlib dependency** — pure Lean 4 core only
-- **Zero `sorry`** — complete proof from axioms
-- **Standard axioms only** — `#print axioms jsp_000301` shows only `[propext, Quot.sound]`
-- **No `native_decide`** — small kernel `decide` calls only (factorizations, primality checks over bounded ranges)
-
-## Formal Statement
+## Definitions and formal statements
 
 ```lean
 def PrimeP (p : Nat) : Prop := 2 ≤ p ∧ ∀ m, m ∣ p → m = 1 ∨ m = p
 def Powerful (n : Nat) : Prop := ∀ p, PrimeP p → p ∣ n → p * p ∣ n
 def IsSquare (n : Nat) : Prop := ∃ k, n = k * k
 
+/-- Top-level result: the literal negation of the original question. -/
 theorem jsp_000301 :
+    ¬ (∀ n : Nat, 0 < n → Powerful n → Powerful (n + 1) →
+        IsSquare n ∨ IsSquare (n + 1))
+
+/-- The counterexample packaged as a single statement. -/
+theorem jsp_000301_counterexample :
     Powerful 12167 ∧ Powerful 12168 ∧
     ¬ IsSquare 12167 ∧ ¬ IsSquare 12168 ∧
     12168 = 12167 + 1
 ```
 
-## Proof Summary
+`jsp_000301` is derived from `jsp_000301_counterexample`; a counterexample fully resolves a
+yes/no question, so the full original problem is covered.
+
+## Key features
+
+- Zero Mathlib dependency - pure Lean 4 core only
+- Zero `sorry` / `admit`
+- No `native_decide` (`decide` on small bounded computations only)
+- Axioms: `[propext, Quot.sound]`
+
+## Proof summary
 
 | Lemma | Method |
 |---|---|
-| `coprime_dvd` | If `gcd(p, a) = 1` and `p ∣ a*b`, then `p ∣ b`. Proved by calculating `gcd(p*b, a*b) = b * gcd(p, a) = b` via `Nat.gcd_mul_left`. |
-| `euclid_general` | If `PrimeP p` and `p ∣ a*b`, then `p ∣ a ∨ p ∣ b`. Case split: if `p ∣ a`, done; else `gcd(p, a) = 1` (since `PrimeP` means only divisors are `1` and `p`), apply `coprime_dvd`. |
-| `primeP_dvd_sq` / `primeP_dvd_cube` | If `PrimeP p` and `p ∣ a²` / `p ∣ a³`, then `p ∣ a`. Direct from `euclid_general`. |
-| Small prime certificates (2, 3, 13, 23) | Kernel `decide` on `List.range` bounded trial division. |
-| `powerful_12167` | `12167 = 23³`. Any prime divisor `p` of 23³ equals 23; `23² ∣ 23³` ✓ |
-| `powerful_12168` | `12168 = 2³ × 3² × 13²`. Factor out via `euclid_general`; only prime divisors are 2, 3, 13; their squares all divide 12168 ✓ |
-| Non-square | `110² = 12100 < 12167 < 12168 < 12321 = 111²`. Bounded interval, no square possible ✓ |
+| `coprime_dvd` | From `gcd p a = 1` and `p ∣ a*b` conclude `p ∣ b`, via `gcd(p*b, a*b) = b * gcd p a`. |
+| `euclid_general` | If `PrimeP p` and `p ∣ a*b` then `p ∣ a ∨ p ∣ b`. |
+| `primeP_dvd_sq`, `primeP_dvd_cube` | Prime dividing `a*a` (resp. `a*a*a`) divides `a`. |
+| `primeP_2/3/13/23` | Kernel `decide` primality certificates over bounded trial division. |
+| `powerful_12167` | `12167 = 23^3`; the only prime divisor is 23, and `23^2 ∣ 23^3`. |
+| `powerful_12168` | `12168 = 2^3 * 3^2 * 13^2`; prime divisors are exactly 2, 3, 13, whose squares divide 12168. |
+| `not_square_12167`, `not_square_12168` | `110^2 < n < 111^2`, so `n` lies strictly between consecutive squares. |
 
-## Build and Verify
+## Build and verify
 
 ```bash
-# Install Lean 4.20.0
-elan install leanprover/lean4:v4.20.0
+# Lean 4.20.0 (see ./lean-toolchain)
+lake build          # builds the default target Jsp000301
 
-# Verify the proof compiles
-lean proof/Jsp000301.lean
-
-# Check axioms (should show only propext + Quot.sound)
-lean proof/Jsp000301.lean --print axioms
-# or inside Lean: #print axioms jsp_000301
+# or directly
+lean Jsp000301.lean
 ```
 
-## Mathematical Attribution
-
-The mathematical result (the counterexample 12167/12168) is due to published literature:
-- S. W. Golomb, *Powerful numbers*, Amer. Math. Monthly 77 (1970), 848–855.
-- D. T. Walker, *Consecutive integer pairs of powerful numbers and related Diophantine equations*, Fibonacci Quart. 14 (1976), 111–116.
-- R. K. Guy, *Unsolved Problems in Number Theory*, 3rd ed. (2004), B16.
-
-This repository claims **formalization authorship only**. Per Justin Sun Prize rules: problems solved before 2026-01-01 but formalized afterward entitle the formalizer to the formalization portion (30%) of the award.
-
-## Axiom Audit
+Axiom audit (inside Lean, or from the build log):
 
 ```
-jsp_000301 depends on axioms: [propext, Quot.sound]
+#print axioms jsp_000301
+-- 'jsp_000301' depends on axioms: [propext, Quot.sound]
 ```
 
-No `sorryAx`, no `Classical.choice`, no `native_decide` / `Lean.ofReduceBool`, no custom axioms.
+## Mathematical attribution
+
+The mathematical counterexample is due to published literature:
+
+- S. W. Golomb, *Powerful numbers*, Amer. Math. Monthly 77(8) (1970), 848-852.
+- D. T. Walker, *Consecutive integer pairs of powerful numbers and related Diophantine equations*, Fibonacci Quart. (1976), 111-116.
+- R. K. Guy, *Unsolved Problems in Number Theory* (2004).
+- Attribution source: https://www.erdosproblems.com/latex/365
+
+This repository claims **formalization authorship only** (Lean 4.20.0).
