@@ -1,6 +1,6 @@
-import Lake
-open Lake DSL
+name = "jsp000301"
+version = "0.1.0"
+defaultTargets = ["Jsp000301"]
 
-package JSP000301 where
-  name := "JSP-000301"
-  version := v!"1.0.0"
+[[lean_lib]]
+name = "Jsp000301"
