@@ -1,0 +1,6 @@
+import Lake
+open Lake DSL
+
+package JSP000301 where
+  name := "JSP-000301"
+  version := v!"1.0.0"
