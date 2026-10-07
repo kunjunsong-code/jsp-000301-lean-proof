@@ -1,6 +1,12 @@
 name = "jsp000301"
 version = "0.1.0"
-defaultTargets = ["Jsp000301"]
+defaultTargets = ["Jsp000301", "PrimeEquiv", "IndependentCheck"]
 
 [[lean_lib]]
 name = "Jsp000301"
+
+[[lean_lib]]
+name = "PrimeEquiv"
+
+[[lean_lib]]
+name = "IndependentCheck"
