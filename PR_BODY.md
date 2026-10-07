@@ -1,7 +1,8 @@
 # PR body — JSP-000301 Lean formalization
 
-Fill every `REPLACE_WITH_*` before submitting. Fields marked **⚠ ACTION** cannot be
-completed until the proof repository is pushed; every other field is final.
+All fields are filled and every link is pinned to the submitted commit
+`8734eff22db5c796dcfb5b61e90f3277a9de4228`. Verification was re-run by cloning that commit fresh from
+GitHub and rebuilding from zero.
 
 ---
 
@@ -76,9 +77,8 @@ unchecked because this PR does not submit new solver information.
   review predates this PR and already covers the mathematical side.
 
 - **Formal statement location, pinned to a full commit SHA:**
-  ⚠ ACTION — `Jsp000301.lean`, lines 253–264, at commit `<40-char SHA>`.
-  Permalink format:
-  `https://github.com/<OWNER>/<REPO>/blob/<40-char SHA>/Jsp000301.lean#L253-L264`
+  `Jsp000301.lean`, lines 253–264, at commit `8734eff22db5c796dcfb5b61e90f3277a9de4228`.
+  Permalink: https://github.com/kunjunsong-code/jsp-000301-lean-proof/blob/8734eff22db5c796dcfb5b61e90f3277a9de4228/Jsp000301.lean#L253-L264
 
 - **Fully qualified target theorem name:**
   ```
@@ -137,17 +137,19 @@ unchecked because this PR does not submit new solver information.
 
 ## Proof submission
 
-⚠ ACTION — fill after pushing.
-
 ```json
 [
   {
-    "repository": "https://github.com/<OWNER>/<REPO>",
-    "branch": "<BRANCH>",
-    "commit": "<FULL_40_CHARACTER_COMMIT_SHA>"
+    "repository": "https://github.com/kunjunsong-code/jsp-000301-lean-proof",
+    "branch": "main",
+    "commit": "8734eff22db5c796dcfb5b61e90f3277a9de4228"
   }
 ]
 ```
+
+Verified: GitHub API `branches-where-head` for this commit returns `['main']`,
+satisfying the template requirement that *the selected commit is in the named
+branch*.
 
 - **Proof file at the selected commit and fully qualified theorem name:**
   `Jsp000301.lean` → `jsp_000301` (primary target),
@@ -298,12 +300,13 @@ unchecked because this PR does not submit new solver information.
   below — not merely the instructions and not only `audit.py`.
 
 - **Checked repository and full commit SHA:**
-  ⚠ ACTION — `https://github.com/<OWNER>/<REPO>`, branch `<BRANCH>`, commit
-  `<FULL_40_CHARACTER_COMMIT_SHA>`. No difference from the submitted version: the
-  check was run on the same commit submitted here.
+  `https://github.com/kunjunsong-code/jsp-000301-lean-proof`, branch `main`, commit `8734eff22db5c796dcfb5b61e90f3277a9de4228`.
+  **No difference from the submitted version** — the check was run on exactly
+  the commit submitted here, re-verified by cloning that commit fresh from
+  GitHub and rebuilding from zero (26.5 s, exit 0).
 
 - **Verification date, actual conclusion and limitations:**
-  Date: ⚠ ACTION (ISO `YYYY-MM-DD`).
+  Date: 2026-10-08.
   Conclusion: **`lake build` succeeds from a clean tree with exit code 0; every
   target theorem reports axioms `[propext, Quot.sound]` only; no `sorry`, no
   `admit`, no added axiom, no `native_decide`.**
@@ -359,7 +362,8 @@ unchecked because this PR does not submit new solver information.
   entry's existing **Current status** already credits him and is left unchanged.
 
 - **Lean formalization author(s) and contribution, if applicable:**
-  ⚠ ACTION — `<ACCOUNT>`, the submitting account, author of the standalone Lean
+  **kunjunsong-code** (`kunjunsong@gmail.com`), the submitting account and sole
+  author of the standalone Lean
   formalization in `Jsp000301.lean`, `PrimeEquiv.lean` and `IndependentCheck.lean`.
   This is a **sole-author, personal-repository** contribution, so no organizational
   contribution-evidence chain is required.
@@ -369,10 +373,17 @@ unchecked because this PR does not submit new solver information.
   (Stated plainly so the record does not imply external review that did not occur.)
 
 - **Public authorship evidence:**
-  ⚠ ACTION — the proof repository is owned by the submitting account and every
-  commit is authored by that account, which is the primary evidence for a personal
-  repository. Commit history is public; no mismatch between author, account and
-  proposed credits exists to explain.
+  The proof repository is owned by the submitting account and every commit is
+  authored by that account, which is the primary evidence for a personal
+  repository. Verified from the pushed history:
+
+  ```
+8734eff22db5c796dcfb5b61e90f3277a9de4228
+  kunjunsong-code <kunjunsong@gmail.com>
+  ```
+
+  Commit history is public; no mismatch between author, account and proposed
+  credits exists to explain.
   The submitted Lean code contains **no text from this awards repository** — only
   the mathematical definitions of *powerful* and *perfect square*, which are
   standard mathematical vocabulary predating the project by decades (Golomb 1970).

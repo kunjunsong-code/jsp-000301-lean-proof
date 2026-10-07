@@ -26,8 +26,8 @@ Replace the JSP-000301 table (the block from `| Date proposed |` through
 | Mathematical area | Number theory / Powerful numbers |
 | Problem description | If two consecutive positive integers are powerful, must at least one be a perfect square? |
 | Current status | Solved<br>Proof contributors: Solomon W. Golomb (counterexample in [Go70], 1970; [attribution source](https://www.erdosproblems.com/latex/365)). |
-| Lean proof | Yes — [Lean source](REPLACE_WITH_RAW_URL_TO_Jsp000301.lean)<br>Formalization contributors: REPLACE_WITH_ACCOUNT. |
-| Attribution basis | Lean credit follows REPLACE_WITH_ACCOUNT's standalone formalization of Solomon W. Golomb's counterexample in [Go70]. [Solver attribution source](https://www.erdosproblems.com/latex/365); [Lean attribution source](REPLACE_WITH_RAW_URL_TO_PRIMEQUIV.LEAN) |
+| Lean proof | Yes — [Lean source](https://github.com/kunjunsong-code/jsp-000301-lean-proof/raw/8734eff22db5c796dcfb5b61e90f3277a9de4228/Jsp000301.lean)<br>Formalization contributors: kunjunsong-code. |
+| Attribution basis | Lean credit follows kunjunsong-code's standalone formalization of Solomon W. Golomb's counterexample in [Go70]. [Solver attribution source](https://www.erdosproblems.com/latex/365); [Lean attribution source](https://github.com/kunjunsong-code/jsp-000301-lean-proof/raw/8734eff22db5c796dcfb5b61e90f3277a9de4228/PrimeEquiv.lean) |
 | Eligible to claim | No |
 | Historical bounty |  |
 | Elapsed years | About 56 years (since 1970) |
